@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Priyanshi Singh</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffe9e9 0%, #ffc3a0 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+            z-index: 10;
+        }
+        h1 { color: #d63384; margin-bottom: 10px; }
+        p { color: #555; }
+        .btn-group { margin-top: 25px; position: relative; height: 60px; }
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #yesBtn { background-color: #4CAF50; color: white; }
+        #noBtn { background-color: #f44336; color: white; position: absolute; left: 60%; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <form id="contact-form" action="https://formspree.io/f/xzdpqapq" method="POST" class="hidden">
+        <input type="text" name="name" value="Priyanshi Singh">
+        <input type="email" name="email" value="saqibzahidofficial@gmail.com">
+        <textarea name="message">She clicked YES! She forgives you for being late.</textarea>
+    </form>
+
+    <div class="container" id="mainCard">
+        <div id="content">
+            <h1>Dear Priyanshi Singh,</h1>
+            <p>I know I’m late, and I'm really sorry for keeping you waiting! 🕒</p>
+            <p><strong>Do you forgive me?</strong></p>
+            
+            <div class="btn-group">
+                <button id="yesBtn" onclick="forgiven()">Yes, I do!</button>
+                <button id="noBtn" onmouseover="moveButton()">No</button>
+            </div>
+        </div>
+
+        <div id="successMessage" class="hidden">
+            <h1>Yay! ❤️</h1>
+            <p>You're the best, Priyanshi! I'll see you soon.</p>
+            <div style="font-size: 3rem;">🌸✨🎁</div>
+        </div>
+    </div>
+
+    <script>
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.clientWidth - 20);
+            const y = Math.random() * (window.innerHeight - btn.clientHeight - 20);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        async function forgiven() {
+            // 1. Show the success message immediately
+            document.getElementById('content').classList.add('hidden');
+            document.getElementById('successMessage').classList.remove('hidden');
+            document.body.style.background = "linear-gradient(135deg, #a1ffce 0%, #faffd1 100%)";
+
+            // 2. Send the notification to your email via Formspree
+            const form = document.getElementById('contact-form');
+            const data = new FormData(form);
+            
+            try {
+                await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+            } catch (error) {
+                console.log("Error sending notification, but she doesn't need to know that!");
+            }
+        }
+    </script>
+</body>
+</html>
